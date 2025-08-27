@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Notatki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #9fc6e2; /* jasnoniebieskie tło */
+      font-family: sans-serif;
+      color: black;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ccc;
+      transition: box-shadow 0.4s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .container:hover {
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #1e3a8a;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #1e3a8a;
+    }
+
+    .title-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 14px;
+      border: none;
+      border-radius: 10px;
+      box-sizing: border-box;
+      background: radial-gradient(circle at center, #3b5998, #5a8dee);
+      color: white;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .title-input {
+      flex: 1;
+    }
+
+    .random-btn {
+      background: radial-gradient(circle at center, #3b5998, #5a8dee);
+      color: white;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .random-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
+
+    select option {
+      color: black;
+      background: #dce7fa;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      transform: scale(1.01);
+      box-shadow: 0 0 12px rgba(90,141,238,0.45);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #d9e6f2;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 160px;
+      margin-top: 10px;
+    }
+
+    .controls { margin-top: 12px; }
+
+    button.action-btn {
+      background: radial-gradient(circle at center, #3b5998, #5a8dee);
+      color: white;
+      cursor: pointer;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      margin-right: 8px;
+    }
+    button.action-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
+
+    .format-btn { width: auto; padding: 6px 12px; margin-right: 10px; }
+
+    .spacer { margin-top: 20px; }
+
+    .dates { font-size: 12px; color: #555; margin-top: 10px; text-align: right; font-style: italic; }
+
+    @media (max-width: 480px) {
+      .container { padding: 16px; border-radius: 12px; }
+      h1 { font-size: 24px; }
+      textarea { min-height: 120px; }
+      .title-row { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Notatki</h1>
+    <p class="description">Notatki służą do zapisywania Twoich złotych myśli i refleksji podczas czytania wpisów — miej je zawsze pod ręką.</p>
+
+    <div id="title-label-container">
+      <label for="project-name" style="margin: 0;">Nazwa Notatki:</label>
+      <div class="title-row">
+        <input type="text" id="project-name" class="title-input" placeholder="np. Poranna Modlitwa" />
+        <!-- usunięty tylko wybór koloru - styly pozostały -->
+        <button type="button" class="random-btn" id="randomize-btn" title="Wylosuj nazwę">Wylosuj</button>
+      </div>
+    </div>
+
+    <label for="note-text">Treść notatki:</label>
+    <div>
+      <button class="action-btn format-btn" type="button" onclick="formatText('bold')" title="Pogrubienie"><b>B</b></button>
+      <button class="action-btn format-btn" type="button" onclick="formatText('underline')" title="Podkreślenie"><u>U</u></button>
+    </div>
+
+    <textarea id="note-text" placeholder="Zapisz swoją notatkę..."></textarea>
+
+    <div class="dates" id="note-dates"></div>
+
+    <div class="controls">
+      <button id="save-btn" class="action-btn" onclick="saveNote()">Zapisz notatkę</button>
+    </div>
+
+    <div class="spacer">
+      <label for="saved-projects">Wczytaj zapisany projekt:</label>
+      <select id="saved-projects" onchange="loadNote()">
+        <option value="">-- wybierz --</option>
+      </select>
+      <button id="delete-btn" class="action-btn" onclick="deleteNote()">Usuń notatkę</button>
+    </div>
+  </div>
+
+  <script>
+    const nameInput = document.getElementById('project-name');
+    const noteInput = document.getElementById('note-text');
+    const select = document.getElementById('saved-projects');
+    const datesDiv = document.getElementById('note-dates');
+    const randomizeBtn = document.getElementById('randomize-btn');
+
+    const exampleTitles = [
+      "Poranna Modlitwa",
+      "Wieczorna Refleksja",
+      "Za Co Dziś Dziękujesz?",
+      "Intencja Modlitwy",
+      "Cytat ze Pisma",
+      "Rozważanie Różańcowe",
+      "Dziennik Łask",
+      "Refleksja po Mszy",
+      "Medytacja Adwentowa",
+      "Postanowienie Wielkopostne",
+      "Rozważanie Słowa Bożego",
+      "Modlitwa Dziękczynna",
+      "Moja Droga Wiary",
+      "Intencja Rodzinna",
+      "Rzut Oka na Łaskę",
+      "Krótka Modlitwa Poranna",
+      "Święty Dnia",
+      "Słowo na Dziś",
+      "Pomoc w Trudzie",
+      "O co proszę Pana",
+      "Wdzięczność za Rodzinę",
+      "Zaufanie Bogu",
+      "Pokój i Ukojenie",
+      "Duchowe Postanowienia",
+      "Spotkanie ze Słowem",
+      "Cisza i Rozważanie",
+      "Modlitwa w Czasie Próby",
+      "Dar Pokoju",
+      "Pokora i Miłość",
+      "Otwieram Serce"
+    ];
+
+    function randomizeName() {
+      const i = Math.floor(Math.random() * exampleTitles.length);
+      nameInput.value = exampleTitles[i];
+      nameInput.focus();
+    }
+    randomizeBtn.addEventListener('click', randomizeName);
+
+    function formatText(command) {
+      const textarea = noteInput;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      if (start === end) return;
+
+      let selectedText = textarea.value.substring(start, end);
+      const beforeText = textarea.value.substring(0, start);
+      const afterText = textarea.value.substring(end);
+
+      if (command === 'bold') {
+        selectedText = selectedText.startsWith("**") && selectedText.endsWith("**")
+          ? selectedText.slice(2, -2)
+          : `**${selectedText}**`;
+      } else if (command === 'underline') {
+        selectedText = selectedText.startsWith("__") && selectedText.endsWith("__")
+          ? selectedText.slice(2, -2)
+          : `__${selectedText}__`;
+      }
+
+      textarea.value = beforeText + selectedText + afterText;
+      textarea.selectionStart = start;
+      textarea.selectionEnd = start + selectedText.length;
+      textarea.focus();
+    }
+
+    function formatDate(date) {
+      return date.toLocaleString('pl-PL', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+      });
+    }
+
+    function saveNote() {
+      const name = nameInput.value.trim();
+      const text = noteInput.value;
+
+      if (!name) { alert("Podaj nazwę notatki."); return; }
+
+      const existing = localStorage.getItem("note_" + name);
+      let created = new Date().toISOString();
+      if (existing) {
+        try { const parsed = JSON.parse(existing); if (parsed.created) created = parsed.created; } catch (e) {}
+      }
+
+      const noteData = { text, created, updated: new Date().toISOString() };
+      localStorage.setItem("note_" + name, JSON.stringify(noteData));
+      alert("Zapisano.");
+      updateProjectList();
+      showDates(noteData);
+    }
+
+    function loadNote() {
+      const name = select.value;
+      if (!name) { nameInput.value = ''; noteInput.value = ''; datesDiv.textContent = ''; return; }
+      nameInput.value = name;
+      const noteDataStr = localStorage.getItem("note_" + name);
+      if (noteDataStr) {
+        try { const noteData = JSON.parse(noteDataStr); noteInput.value = noteData.text || ''; showDates(noteData); } catch (e) { noteInput.value = ''; datesDiv.textContent = ''; }
+      } else { noteInput.value = ''; datesDiv.textContent = ''; }
+    }
+
+    function updateProjectList() {
+      const keys = Object.keys(localStorage).filter(k => k.startsWith("note_"));
+      select.innerHTML = '<option value="">-- wybierz --</option>';
+      keys.forEach(k => { const name = k.replace("note_", ""); const option = document.createElement("option"); option.value = name; option.textContent = name; select.appendChild(option); });
+    }
+
+    function deleteNote() {
+      const name = select.value;
+      if (!name) { alert("Wybierz notatkę do usunięcia."); return; }
+      if (confirm(`Na pewno chcesz usunąć notatkę "${name}"?`)) { localStorage.removeItem("note_" + name); alert("Usunięto notatkę."); nameInput.value = ''; noteInput.value = ''; datesDiv.textContent = ''; updateProjectList(); }
+    }
+
+    function showDates(noteData) {
+      let text = "";
+      if (noteData && noteData.created) { const created = new Date(noteData.created); text += `Utworzono: ${formatDate(created)}`; }
+      if (noteData && noteData.updated) { const updated = new Date(noteData.updated); text += `<br>Ostatnia edycja: ${formatDate(updated)}`; }
+      datesDiv.innerHTML = text;
+    }
+
+    window.addEventListener('load', () => { updateProjectList(); });
+  </script>
+</body>
+</html>
