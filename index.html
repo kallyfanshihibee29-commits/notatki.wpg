@@ -591,6 +591,8 @@
         .settings-panel .theme-option:nth-child(16) { animation-delay: 1.25s; }
         .settings-panel .theme-option:nth-child(17) { animation-delay: 1.3s; }
         .settings-panel .theme-option:nth-child(18) { animation-delay: 1.35s; }
+        .settings-panel .theme-option:nth-child(19) { animation-delay: 1.4s; }
+        .settings-panel .theme-option:nth-child(20) { animation-delay: 1.45s; }
 
         @keyframes fadeInUp {
             from {
@@ -661,6 +663,55 @@
             font-size: 14px;
             font-weight: 500;
             color: var(--navy);
+        }
+
+        .settings-section {
+            margin-bottom: 20px;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            margin: 20px 0;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--navy);
+            margin-bottom: 12px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Specjalne style dla motywu świątecznego */
+        body.christmas-theme .header h1,
+        body.christmas-theme .modal-title,
+        body.christmas-theme .settings-title,
+        body.christmas-theme .theme-name,
+        body.christmas-theme .section-label,
+        body.christmas-theme .form-label,
+        body.christmas-theme .empty-state h3,
+        body.christmas-theme .empty-state p {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        body.christmas-theme .note-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        body.christmas-theme .note-title {
+            color: var(--navy);
+            text-shadow: none;
+        }
+
+        body.christmas-theme .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         @media (max-width: 768px) {
@@ -845,61 +896,80 @@
    <svg viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px;"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" /> <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m15.5-3.5L19 4.5M5 19.5L7.5 17M19 19.5L16.5 17M5 4.5L7.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
    </svg></button>
   <div class="settings-panel" id="settingsPanel">
-   <h3 class="settings-title">Dostosuj wygląd strony</h3>
-   <div class="color-themes">
-    <div class="theme-option" onclick="changeTheme('pink')" data-theme="pink">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #fce7f3 0%, #db2777 100%);"></div><span class="theme-name">Różowy</span>
+   <h3 class="settings-title">Dostosuj wygląd strony</h3><!-- Sekcja Kolory Sezonowe -->
+   <div class="settings-section">
+    <div class="section-label">
+     ❄️ Kolory Sezonowe 🎄
     </div>
-    <div class="theme-option" onclick="changeTheme('lightPink')" data-theme="lightPink">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #ffe4e6 0%, #f43f5e 100%);"></div><span class="theme-name">Jasny różany</span>
+    <div class="color-themes">
+     <div class="theme-option" onclick="changeTheme('christmas')" data-theme="christmas">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #1a472a 0%, #c41e3a 100%);"></div><span class="theme-name">🎄 Świąteczna Harmonia</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('snow')" data-theme="snow">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #e0f2fe 0%, #0ea5e9 100%);"></div><span class="theme-name">❄️ Śnieżna Zadyma</span>
+     </div>
     </div>
-    <div class="theme-option" onclick="changeTheme('pumpkin')" data-theme="pumpkin">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #ff6b35 0%, #ea580c 100%);"></div><span class="theme-name">Dojrzała dynia</span>
+   </div>
+   <div class="section-divider"></div><!-- Sekcja Klasyczne Kolory -->
+   <div class="settings-section">
+    <div class="section-label">
+     🌈 Kolory Klasyczne
     </div>
-    <div class="theme-option" onclick="changeTheme('orange')" data-theme="orange">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #fed7aa 0%, #f59e0b 100%);"></div><span class="theme-name">Pomarańczowy</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('yellow')" data-theme="yellow">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);"></div><span class="theme-name">Żółty</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('mustard')" data-theme="mustard">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #d4a574 0%, #b8860b 100%);"></div><span class="theme-name">Musztardowy</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('olive')" data-theme="olive">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #8b9467 0%, #6b7c4f 100%);"></div><span class="theme-name">Spleśniała zieleń</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('green')" data-theme="green">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #a7f3d0 0%, #059669 100%);"></div><span class="theme-name">Zielony</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('turquoise')" data-theme="turquoise">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #a5f3fc 0%, #06b6d4 100%);"></div><span class="theme-name">Turkusowy</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('lightBlue')" data-theme="lightBlue">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #bfdbfe 0%, #60a5fa 100%);"></div><span class="theme-name">Jasny błękit</span>
-    </div>
-    <div class="theme-option active" onclick="changeTheme('blue')" data-theme="blue">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #9fc6e2 0%, #3b5998 100%);"></div><span class="theme-name">Niebieski (domyślny)</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('navy')" data-theme="navy">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #93c5fd 0%, #1e3a8a 100%);"></div><span class="theme-name">Granatowy</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('purple')" data-theme="purple">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #e9d5ff 0%, #8b5cf6 100%);"></div><span class="theme-name">Fioletowy</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('plum')" data-theme="plum">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #c8b5d1 0%, #8e4a9c 100%);"></div><span class="theme-name">Śliwkowy</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('beige')" data-theme="beige">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #f7f3e9 0%, #e6d7c3 100%);"></div><span class="theme-name">Beżowy</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('latte')" data-theme="latte">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #d4b896 0%, #8d6e63 100%);"></div><span class="theme-name">Spienione latte</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('gray')" data-theme="gray">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #e5e7eb 0%, #4b5563 100%);"></div><span class="theme-name">Szary</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('blackWhite')" data-theme="blackWhite">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #ffffff 0%, #000000 100%);"></div><span class="theme-name">Czarno-biały</span>
+    <div class="color-themes">
+     <div class="theme-option" onclick="changeTheme('pink')" data-theme="pink">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #fce7f3 0%, #db2777 100%);"></div><span class="theme-name">Różowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('lightPink')" data-theme="lightPink">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #ffe4e6 0%, #f43f5e 100%);"></div><span class="theme-name">Jasny różany</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('pumpkin')" data-theme="pumpkin">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #ff6b35 0%, #ea580c 100%);"></div><span class="theme-name">Dojrzała dynia</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('orange')" data-theme="orange">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #fed7aa 0%, #f59e0b 100%);"></div><span class="theme-name">Pomarańczowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('yellow')" data-theme="yellow">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);"></div><span class="theme-name">Żółty</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('mustard')" data-theme="mustard">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #d4a574 0%, #b8860b 100%);"></div><span class="theme-name">Musztardowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('olive')" data-theme="olive">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #8b9467 0%, #6b7c4f 100%);"></div><span class="theme-name">Spleśniała zieleń</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('green')" data-theme="green">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #a7f3d0 0%, #059669 100%);"></div><span class="theme-name">Zielony</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('turquoise')" data-theme="turquoise">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #a5f3fc 0%, #06b6d4 100%);"></div><span class="theme-name">Turkusowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('lightBlue')" data-theme="lightBlue">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #bfdbfe 0%, #60a5fa 100%);"></div><span class="theme-name">Jasny błękit</span>
+     </div>
+     <div class="theme-option active" onclick="changeTheme('blue')" data-theme="blue">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #9fc6e2 0%, #3b5998 100%);"></div><span class="theme-name">Niebieski (domyślny)</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('navy')" data-theme="navy">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #93c5fd 0%, #1e3a8a 100%);"></div><span class="theme-name">Granatowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('purple')" data-theme="purple">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #e9d5ff 0%, #8b5cf6 100%);"></div><span class="theme-name">Fioletowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('plum')" data-theme="plum">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #c8b5d1 0%, #8e4a9c 100%);"></div><span class="theme-name">Śliwkowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('beige')" data-theme="beige">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #f7f3e9 0%, #e6d7c3 100%);"></div><span class="theme-name">Beżowy</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('latte')" data-theme="latte">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #d4b896 0%, #8d6e63 100%);"></div><span class="theme-name">Spienione latte</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('gray')" data-theme="gray">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #e5e7eb 0%, #4b5563 100%);"></div><span class="theme-name">Szary</span>
+     </div>
+     <div class="theme-option" onclick="changeTheme('blackWhite')" data-theme="blackWhite">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #ffffff 0%, #000000 100%);"></div><span class="theme-name">Czarno-biały</span>
+     </div>
     </div>
    </div>
   </div>
@@ -1016,7 +1086,7 @@
         function openModal(noteId = null) {
             if (isModalAnimating) return;
             
-            // Jeśli to nowa notatka (kliknięcie przycisku), użyj animacji przekształcenia
+            // Jeśli to nowa notatka (kliknięcie przycisku), użyj animacji przekszta��cenia
             if (!noteId) {
                 openModalWithAnimation();
                 return;
@@ -1551,8 +1621,26 @@
             }
         }
 
-        // Definicje schematów kolorów (w kolejności tęczowej)
+        // Definicje schematów kolorów
         const colorThemes = {
+            // Kolory Sezonowe
+            christmas: {
+                bg: '#1a472a',
+                bg2: '#2d5a3d',
+                navy: '#1a472a',
+                gradStart: '#c41e3a',
+                gradEnd: '#8b0000',
+                accent: '#ffffff'
+            },
+            snow: {
+                bg: '#e0f2fe',
+                bg2: '#f0f9ff',
+                navy: '#0c4a6e',
+                gradStart: '#0ea5e9',
+                gradEnd: '#38bdf8',
+                accent: '#0284c7'
+            },
+            // Kolory Klasyczne (w kolejności tęczowej)
             pink: {
                 bg: '#fce7f3',
                 bg2: '#fdf2f8',
@@ -1712,6 +1800,13 @@
             root.style.setProperty('--quote-grad-end', theme.gradEnd);
             root.style.setProperty('--point-blue', theme.accent);
 
+            // Dodaj specjalną klasę dla motywu świątecznego
+            if (themeName === 'christmas') {
+                document.body.classList.add('christmas-theme');
+            } else {
+                document.body.classList.remove('christmas-theme');
+            }
+
             // Aktualizuj aktywną opcję
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.classList.remove('active');
@@ -1742,6 +1837,13 @@
             root.style.setProperty('--quote-grad-end', theme.gradEnd);
             root.style.setProperty('--point-blue', theme.accent);
 
+            // Dodaj specjalną klasę dla motywu świątecznego
+            if (savedTheme === 'christmas') {
+                document.body.classList.add('christmas-theme');
+            } else {
+                document.body.classList.remove('christmas-theme');
+            }
+
             // Aktualizuj aktywną opcję
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.classList.remove('active');
@@ -1766,5 +1868,5 @@
         loadSavedTheme();
         renderNotes();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a7321c5b67e441d',t:'MTc2NDU5Nzg0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a744b4086b8dbc9',t:'MTc2NDYxMDAzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
