@@ -127,12 +127,54 @@
             cursor: pointer;
             margin-bottom: 30px;
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            transition: all 0.4s ease;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .add-note-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 40px rgba(31, 38, 135, 0.25);
+        }
+
+        .add-note-btn.expanding {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+        }
+
+        .add-note-btn.expanded {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: none;
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            padding: 30px;
+            z-index: 2000;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: none;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            overflow-y: auto;
+        }
+
+        .add-note-btn.expanding .btn-text,
+        .add-note-btn.expanded .btn-text {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .btn-text {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .notes-grid {
@@ -206,6 +248,26 @@
             box-shadow: 0 10px 30px rgba(31, 38, 135, 0.2);
             animation: slideInRight 0.5s ease-out;
         }
+
+        .modal-form-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .modal-form-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-form-content .form-group {
+            animation: fadeInUp 0.4s ease-out both;
+        }
+
+        .modal-form-content .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .modal-form-content .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .modal-form-content .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .modal-form-content .form-group:nth-child(4) { animation-delay: 0.4s; }
 
         .modal-header {
             display: flex;
@@ -525,6 +587,10 @@
         .settings-panel .theme-option:nth-child(12) { animation-delay: 1.05s; }
         .settings-panel .theme-option:nth-child(13) { animation-delay: 1.1s; }
         .settings-panel .theme-option:nth-child(14) { animation-delay: 1.15s; }
+        .settings-panel .theme-option:nth-child(15) { animation-delay: 1.2s; }
+        .settings-panel .theme-option:nth-child(16) { animation-delay: 1.25s; }
+        .settings-panel .theme-option:nth-child(17) { animation-delay: 1.3s; }
+        .settings-panel .theme-option:nth-child(18) { animation-delay: 1.35s; }
 
         @keyframes fadeInUp {
             from {
@@ -781,35 +847,41 @@
   <div class="settings-panel" id="settingsPanel">
    <h3 class="settings-title">Dostosuj wygląd strony</h3>
    <div class="color-themes">
-    <div class="theme-option active" onclick="changeTheme('blue')" data-theme="blue">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #9fc6e2 0%, #3b5998 100%);"></div><span class="theme-name">Niebieski (domyślny)</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('lightBlue')" data-theme="lightBlue">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #bfdbfe 0%, #60a5fa 100%);"></div><span class="theme-name">Jasny błękit</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('green')" data-theme="green">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #a7f3d0 0%, #059669 100%);"></div><span class="theme-name">Zielony</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('olive')" data-theme="olive">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #8b9467 0%, #6b7c4f 100%);"></div><span class="theme-name">Spleśniała zieleń</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('gray')" data-theme="gray">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #e5e7eb 0%, #4b5563 100%);"></div><span class="theme-name">Szary</span>
-    </div>
-    <div class="theme-option" onclick="changeTheme('blackWhite')" data-theme="blackWhite">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #ffffff 0%, #000000 100%);"></div><span class="theme-name">Czarno-biały</span>
-    </div>
     <div class="theme-option" onclick="changeTheme('pink')" data-theme="pink">
      <div class="theme-preview" style="background: linear-gradient(135deg, #fce7f3 0%, #db2777 100%);"></div><span class="theme-name">Różowy</span>
     </div>
     <div class="theme-option" onclick="changeTheme('lightPink')" data-theme="lightPink">
      <div class="theme-preview" style="background: linear-gradient(135deg, #ffe4e6 0%, #f43f5e 100%);"></div><span class="theme-name">Jasny różany</span>
     </div>
+    <div class="theme-option" onclick="changeTheme('pumpkin')" data-theme="pumpkin">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #ff6b35 0%, #ea580c 100%);"></div><span class="theme-name">Dojrzała dynia</span>
+    </div>
     <div class="theme-option" onclick="changeTheme('orange')" data-theme="orange">
      <div class="theme-preview" style="background: linear-gradient(135deg, #fed7aa 0%, #f59e0b 100%);"></div><span class="theme-name">Pomarańczowy</span>
     </div>
-    <div class="theme-option" onclick="changeTheme('pumpkin')" data-theme="pumpkin">
-     <div class="theme-preview" style="background: linear-gradient(135deg, #ff6b35 0%, #ea580c 100%);"></div><span class="theme-name">Dojrzała dynia</span>
+    <div class="theme-option" onclick="changeTheme('yellow')" data-theme="yellow">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);"></div><span class="theme-name">Żółty</span>
+    </div>
+    <div class="theme-option" onclick="changeTheme('mustard')" data-theme="mustard">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #d4a574 0%, #b8860b 100%);"></div><span class="theme-name">Musztardowy</span>
+    </div>
+    <div class="theme-option" onclick="changeTheme('olive')" data-theme="olive">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #8b9467 0%, #6b7c4f 100%);"></div><span class="theme-name">Spleśniała zieleń</span>
+    </div>
+    <div class="theme-option" onclick="changeTheme('green')" data-theme="green">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #a7f3d0 0%, #059669 100%);"></div><span class="theme-name">Zielony</span>
+    </div>
+    <div class="theme-option" onclick="changeTheme('turquoise')" data-theme="turquoise">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #a5f3fc 0%, #06b6d4 100%);"></div><span class="theme-name">Turkusowy</span>
+    </div>
+    <div class="theme-option" onclick="changeTheme('lightBlue')" data-theme="lightBlue">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #bfdbfe 0%, #60a5fa 100%);"></div><span class="theme-name">Jasny błękit</span>
+    </div>
+    <div class="theme-option active" onclick="changeTheme('blue')" data-theme="blue">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #9fc6e2 0%, #3b5998 100%);"></div><span class="theme-name">Niebieski (domyślny)</span>
+    </div>
+    <div class="theme-option" onclick="changeTheme('navy')" data-theme="navy">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #93c5fd 0%, #1e3a8a 100%);"></div><span class="theme-name">Granatowy</span>
     </div>
     <div class="theme-option" onclick="changeTheme('purple')" data-theme="purple">
      <div class="theme-preview" style="background: linear-gradient(135deg, #e9d5ff 0%, #8b5cf6 100%);"></div><span class="theme-name">Fioletowy</span>
@@ -823,6 +895,12 @@
     <div class="theme-option" onclick="changeTheme('latte')" data-theme="latte">
      <div class="theme-preview" style="background: linear-gradient(135deg, #d4b896 0%, #8d6e63 100%);"></div><span class="theme-name">Spienione latte</span>
     </div>
+    <div class="theme-option" onclick="changeTheme('gray')" data-theme="gray">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #e5e7eb 0%, #4b5563 100%);"></div><span class="theme-name">Szary</span>
+    </div>
+    <div class="theme-option" onclick="changeTheme('blackWhite')" data-theme="blackWhite">
+     <div class="theme-preview" style="background: linear-gradient(135deg, #ffffff 0%, #000000 100%);"></div><span class="theme-name">Czarno-biały</span>
+    </div>
    </div>
   </div>
   <div class="container">
@@ -831,7 +909,27 @@
     <div class="search-container"><input type="text" class="search-input" placeholder="Wyszukaj notatki..." id="searchInput"> <span class="search-icon">
       <svg viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" stroke="white" stroke-width="2" /> <path d="m21 21-4.35-4.35" stroke="white" stroke-width="2" stroke-linecap="round" />
       </svg></span>
-    </div><button class="add-note-btn" onclick="openModal()">+ Dodaj Notatkę</button>
+    </div><button class="add-note-btn" onclick="openModal()" id="addNoteBtn"> <span class="btn-text">+ Dodaj Notatkę</span> </button>
+    <div class="modal-form-content" id="modalFormContent" style="display: none; position: fixed; top: 0; left: 0; transform: none; width: 100vw; height: 100vh; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border: none; border-radius: 0; padding: 30px; z-index: 2001; box-shadow: none; overflow-y: auto;">
+     <div class="modal-header">
+      <h2 class="modal-title">Nowa Notatka</h2><button class="close-btn" onclick="closeModal()" type="button">×</button>
+     </div>
+     <form id="noteFormInBtn">
+      <div class="form-group"><label class="form-label">Tytuł</label> <input type="text" class="form-input title-input" id="noteTitleInBtn" placeholder="Wpisz tytuł notatki..." required>
+      </div>
+      <div class="form-group"><label class="form-label">Formatowanie</label>
+       <div class="formatting-toolbar"><input type="color" class="color-picker" id="textColorInBtn" value="#000000" title="Kolor tekstu"> <button type="button" class="format-btn" id="boldBtnInBtn" onclick="toggleFormatInBtn('bold')"><strong>B</strong></button> <button type="button" class="format-btn" id="italicBtnInBtn" onclick="toggleFormatInBtn('italic')"><em>I</em></button> <button type="button" class="format-btn" id="underlineBtnInBtn" onclick="toggleFormatInBtn('underline')"><u>U</u></button> <button type="button" class="format-btn" id="strikeBtnInBtn" onclick="toggleFormatInBtn('strikethrough')"><s>S</s></button> <button type="button" class="format-btn" onclick="document.getElementById('imageInputInBtn').click()" style="padding: 8px 16px;">Dodaj zdjęcie</button>
+       </div><input type="file" id="imageInputInBtn" accept="image/*" style="display: none;" onchange="addImageInBtn(this)">
+       <div id="imageSizeControlInBtn" style="display: none; margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.2); border-radius: 8px;"><label style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--navy);">Rozmiar zdjęcia:</label> <input type="range" id="imageSizeSliderInBtn" min="20" max="100" value="80" style="width: 100%; margin-bottom: 5px; -webkit-appearance: none; appearance: none; height: 8px; border-radius: 5px; background: linear-gradient(135deg, var(--quote-grad-start) 0%, var(--quote-grad-end) 100%); outline: none;" oninput="resizeSelectedImageInBtn(this.value)">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--navy);"><span>Małe</span> <span>Średnie</span> <span>Duże</span>
+        </div>
+       </div>
+      </div>
+      <div class="form-group"><label class="form-label">Treść</label>
+       <div class="form-input content-textarea" id="noteContentInBtn" contenteditable="true" data-placeholder="Wpisz treść notatki..." style="font-family: 'Roboto', sans-serif; min-height: 150px; outline: none; overflow-y: auto;"></div>
+      </div><button type="submit" class="save-btn">Zapisz Notatkę</button>
+     </form>
+    </div>
    </div>
    <div class="notes-grid slide-in-right-delayed" id="notesGrid">
     <div class="empty-state">
@@ -905,7 +1003,26 @@
 
 
 
+        let isModalAnimating = false;
+        let selectedImageInBtn = null;
+        let currentFormatsInBtn = {
+            bold: false,
+            italic: false,
+            underline: false,
+            strikethrough: false,
+            color: '#000000'
+        };
+
         function openModal(noteId = null) {
+            if (isModalAnimating) return;
+            
+            // Jeśli to nowa notatka (kliknięcie przycisku), użyj animacji przekształcenia
+            if (!noteId) {
+                openModalWithAnimation();
+                return;
+            }
+            
+            // Dla edycji notatki użyj standardowego modala
             const modal = document.getElementById('noteModal');
             const modalTitle = document.querySelector('.modal-title');
             const deleteBtn = document.getElementById('deleteBtn');
@@ -914,40 +1031,23 @@
             
             currentNoteId = noteId;
             
-            if (noteId) {
-                const note = notes.find(n => n.id === noteId);
-                modalTitle.textContent = 'Edytuj Notatkę';
-                document.getElementById('noteTitle').value = note.title;
-                contentDiv.innerHTML = note.content || '';
-                document.getElementById('textColor').value = note.color;
-                
-                currentFormats = {
-                    bold: false,
-                    italic: false,
-                    underline: false,
-                    strikethrough: false,
-                    color: '#000000'
-                };
-                
-                updateFormatButtons();
-                deleteBtn.style.display = 'block';
-                shareBtn.style.display = 'block';
-            } else {
-                modalTitle.textContent = 'Nowa Notatka';
-                document.getElementById('noteTitle').value = '';
-                contentDiv.innerHTML = '';
-                document.getElementById('textColor').value = '#000000';
-                currentFormats = {
-                    bold: false,
-                    italic: false,
-                    underline: false,
-                    strikethrough: false,
-                    color: '#000000'
-                };
-                updateFormatButtons();
-                deleteBtn.style.display = 'none';
-                shareBtn.style.display = 'none';
-            }
+            const note = notes.find(n => n.id === noteId);
+            modalTitle.textContent = 'Edytuj Notatkę';
+            document.getElementById('noteTitle').value = note.title;
+            contentDiv.innerHTML = note.content || '';
+            document.getElementById('textColor').value = note.color;
+            
+            currentFormats = {
+                bold: false,
+                italic: false,
+                underline: false,
+                strikethrough: false,
+                color: '#000000'
+            };
+            
+            updateFormatButtons();
+            deleteBtn.style.display = 'block';
+            shareBtn.style.display = 'block';
             
             modal.style.display = 'block';
             
@@ -958,8 +1058,95 @@
             contentDiv.focus();
         }
 
+        function openModalWithAnimation() {
+            if (isModalAnimating) return;
+            
+            isModalAnimating = true;
+            currentNoteId = null;
+            
+            const btn = document.getElementById('addNoteBtn');
+            const formContent = document.getElementById('modalFormContent');
+            const notesGrid = document.getElementById('notesGrid');
+            const searchContainer = document.querySelector('.search-container');
+            
+            // Ukryj siatką notatek i wyszukiwarkę podczas animacji
+            notesGrid.style.opacity = '0';
+            searchContainer.style.opacity = '0';
+            
+            // Resetuj formularz
+            document.getElementById('noteTitleInBtn').value = '';
+            document.getElementById('noteContentInBtn').innerHTML = '';
+            document.getElementById('textColorInBtn').value = '#000000';
+            currentFormatsInBtn = {
+                bold: false,
+                italic: false,
+                underline: false,
+                strikethrough: false,
+                color: '#000000'
+            };
+            updateFormatButtonsInBtn();
+            
+            // Ukryj kontrolki rozmiaru zdjęcia
+            document.getElementById('imageSizeControlInBtn').style.display = 'none';
+            selectedImageInBtn = null;
+            
+            // Krok 1: Przycisk staje się przezroczysty i lekko się powiększa
+            btn.classList.add('expanding');
+            
+            setTimeout(() => {
+                // Krok 2: Przycisk rozciąga się na cały ekran
+                btn.classList.remove('expanding');
+                btn.classList.add('expanded');
+                
+                // Krok 3: Pokaż zawartość formularza na przycisku
+                formContent.style.display = 'block';
+                
+                setTimeout(() => {
+                    formContent.classList.add('show');
+                    document.getElementById('noteTitleInBtn').focus();
+                    isModalAnimating = false;
+                }, 200);
+                
+            }, 400);
+        }
+
         function closeModal() {
-            document.getElementById('noteModal').style.display = 'none';
+            const btn = document.getElementById('addNoteBtn');
+            const formContent = document.getElementById('modalFormContent');
+            const modal = document.getElementById('noteModal');
+            const notesGrid = document.getElementById('notesGrid');
+            const searchContainer = document.querySelector('.search-container');
+            
+            // Jeśli przycisk jest rozwinięty, zamknij z animacją
+            if (btn.classList.contains('expanded')) {
+                isModalAnimating = true;
+                
+                // Krok 1: Ukryj zawartość formularza
+                formContent.classList.remove('show');
+                
+                setTimeout(() => {
+                    formContent.style.display = 'none';
+                    
+                    // Krok 2: Przycisk wraca do stanu expanding (przezroczysty, mały)
+                    btn.classList.remove('expanded');
+                    btn.classList.add('expanding');
+                    
+                    setTimeout(() => {
+                        // Krok 3: Przycisk wraca do normalnego stanu (niebieski)
+                        btn.classList.remove('expanding');
+                        
+                        // Przywróć widoczność siatki notatek i wyszukiwarki
+                        notesGrid.style.opacity = '1';
+                        searchContainer.style.opacity = '1';
+                        
+                        isModalAnimating = false;
+                    }, 400);
+                }, 200);
+            } else {
+                // Standardowe zamknięcie modala
+                modal.style.display = 'none';
+            }
+            
             currentNoteId = null;
         }
 
@@ -1167,11 +1354,96 @@
             document.body.appendChild(shareDiv);
         }
 
+        function toggleFormatInBtn(format) {
+            const contentDiv = document.getElementById('noteContentInBtn');
+            
+            if (format === 'bold') {
+                document.execCommand('bold', false, null);
+                currentFormatsInBtn.bold = !currentFormatsInBtn.bold;
+            } else if (format === 'italic') {
+                document.execCommand('italic', false, null);
+                currentFormatsInBtn.italic = !currentFormatsInBtn.italic;
+            } else if (format === 'underline') {
+                document.execCommand('underline', false, null);
+                currentFormatsInBtn.underline = !currentFormatsInBtn.underline;
+            } else if (format === 'strikethrough') {
+                document.execCommand('strikeThrough', false, null);
+                currentFormatsInBtn.strikethrough = !currentFormatsInBtn.strikethrough;
+            }
+            
+            updateFormatButtonsInBtn();
+            contentDiv.focus();
+        }
+
+        function updateFormatButtonsInBtn() {
+            document.getElementById('boldBtnInBtn').classList.toggle('active', document.queryCommandState('bold'));
+            document.getElementById('italicBtnInBtn').classList.toggle('active', document.queryCommandState('italic'));
+            document.getElementById('underlineBtnInBtn').classList.toggle('active', document.queryCommandState('underline'));
+            document.getElementById('strikeBtnInBtn').classList.toggle('active', document.queryCommandState('strikeThrough'));
+        }
+
+        function applyColorInBtn() {
+            const color = document.getElementById('textColorInBtn').value;
+            document.execCommand('foreColor', false, color);
+            document.getElementById('noteContentInBtn').focus();
+        }
+
+        function addImageInBtn(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.cssText = 'max-width: 80%; height: auto; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; display: block;';
+                    img.onclick = function() {
+                        selectImageInBtn(this);
+                    };
+                    
+                    const contentDiv = document.getElementById('noteContentInBtn');
+                    contentDiv.appendChild(img);
+                    
+                    // Automatycznie zaznacz nowo dodane zdjęcie
+                    selectImageInBtn(img);
+                    contentDiv.focus();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function selectImageInBtn(img) {
+            // Usuń zaznaczenie z poprzedniego zdjęcia
+            if (selectedImageInBtn) {
+                selectedImageInBtn.style.border = 'none';
+            }
+            
+            // Zaznacz nowe zdjęcie
+            selectedImageInBtn = img;
+            img.style.border = '3px solid var(--point-blue)';
+            
+            // Pokaż kontrolki rozmiaru
+            const sizeControl = document.getElementById('imageSizeControlInBtn');
+            sizeControl.style.display = 'block';
+            
+            // Ustaw suwak na aktualny rozmiar
+            const currentWidth = parseInt(img.style.maxWidth) || 80;
+            document.getElementById('imageSizeSliderInBtn').value = currentWidth;
+        }
+
+        function resizeSelectedImageInBtn(size) {
+            if (selectedImageInBtn) {
+                selectedImageInBtn.style.maxWidth = size + '%';
+            }
+        }
+
         document.getElementById('textColor').addEventListener('change', applyColor);
+        document.getElementById('textColorInBtn').addEventListener('change', applyColorInBtn);
 
         // Aktualizuj przyciski formatowania przy zmianie kursora
         document.getElementById('noteContent').addEventListener('keyup', updateFormatButtons);
         document.getElementById('noteContent').addEventListener('mouseup', updateFormatButtons);
+        document.getElementById('noteContentInBtn').addEventListener('keyup', updateFormatButtonsInBtn);
+        document.getElementById('noteContentInBtn').addEventListener('mouseup', updateFormatButtonsInBtn);
 
         document.getElementById('noteForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1195,6 +1467,29 @@
                 };
                 notes.unshift(newNote);
             }
+            
+            localStorage.setItem('notes', JSON.stringify(notes));
+            renderNotes();
+            closeModal();
+        });
+
+        document.getElementById('noteFormInBtn').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('noteTitleInBtn').value;
+            const content = document.getElementById('noteContentInBtn').innerHTML;
+            
+            const noteData = {
+                title,
+                content,
+                date: new Date().toISOString()
+            };
+            
+            const newNote = {
+                ...noteData,
+                id: Date.now()
+            };
+            notes.unshift(newNote);
             
             localStorage.setItem('notes', JSON.stringify(notes));
             renderNotes();
@@ -1256,56 +1551,8 @@
             }
         }
 
-        // Definicje schematów kolorów
+        // Definicje schematów kolorów (w kolejności tęczowej)
         const colorThemes = {
-            blue: {
-                bg: '#9fc6e2',
-                bg2: '#cfe8f8',
-                navy: '#1e3a8a',
-                gradStart: '#3b5998',
-                gradEnd: '#5a8dee',
-                accent: '#2b7bd6'
-            },
-            lightBlue: {
-                bg: '#bfdbfe',
-                bg2: '#dbeafe',
-                navy: '#1e40af',
-                gradStart: '#60a5fa',
-                gradEnd: '#3b82f6',
-                accent: '#2563eb'
-            },
-            green: {
-                bg: '#a7f3d0',
-                bg2: '#d1fae5',
-                navy: '#064e3b',
-                gradStart: '#059669',
-                gradEnd: '#10b981',
-                accent: '#047857'
-            },
-            olive: {
-                bg: '#8b9467',
-                bg2: '#a8b584',
-                navy: '#3d4a2b',
-                gradStart: '#6b7c4f',
-                gradEnd: '#5a6b42',
-                accent: '#4a5635'
-            },
-            gray: {
-                bg: '#e5e7eb',
-                bg2: '#f3f4f6',
-                navy: '#111827',
-                gradStart: '#4b5563',
-                gradEnd: '#6b7280',
-                accent: '#374151'
-            },
-            blackWhite: {
-                bg: '#ffffff',
-                bg2: '#f8f9fa',
-                navy: '#000000',
-                gradStart: '#000000',
-                gradEnd: '#333333',
-                accent: '#666666'
-            },
             pink: {
                 bg: '#fce7f3',
                 bg2: '#fdf2f8',
@@ -1322,6 +1569,14 @@
                 gradEnd: '#e11d48',
                 accent: '#dc2626'
             },
+            pumpkin: {
+                bg: '#ff6b35',
+                bg2: '#ffedd5',
+                navy: '#7c2d12',
+                gradStart: '#ea580c',
+                gradEnd: '#dc2626',
+                accent: '#c2410c'
+            },
             orange: {
                 bg: '#fed7aa',
                 bg2: '#fef3c7',
@@ -1330,13 +1585,69 @@
                 gradEnd: '#f97316',
                 accent: '#d97706'
             },
-            pumpkin: {
-                bg: '#ff6b35',
-                bg2: '#ffedd5',
-                navy: '#7c2d12',
-                gradStart: '#ea580c',
-                gradEnd: '#dc2626',
-                accent: '#c2410c'
+            yellow: {
+                bg: '#fef08a',
+                bg2: '#fef9c3',
+                navy: '#713f12',
+                gradStart: '#eab308',
+                gradEnd: '#facc15',
+                accent: '#ca8a04'
+            },
+            mustard: {
+                bg: '#d4a574',
+                bg2: '#e8c9a1',
+                navy: '#5a3e1b',
+                gradStart: '#b8860b',
+                gradEnd: '#daa520',
+                accent: '#996515'
+            },
+            olive: {
+                bg: '#8b9467',
+                bg2: '#a8b584',
+                navy: '#3d4a2b',
+                gradStart: '#6b7c4f',
+                gradEnd: '#5a6b42',
+                accent: '#4a5635'
+            },
+            green: {
+                bg: '#a7f3d0',
+                bg2: '#d1fae5',
+                navy: '#064e3b',
+                gradStart: '#059669',
+                gradEnd: '#10b981',
+                accent: '#047857'
+            },
+            turquoise: {
+                bg: '#a5f3fc',
+                bg2: '#cffafe',
+                navy: '#164e63',
+                gradStart: '#06b6d4',
+                gradEnd: '#0891b2',
+                accent: '#0e7490'
+            },
+            lightBlue: {
+                bg: '#bfdbfe',
+                bg2: '#dbeafe',
+                navy: '#1e40af',
+                gradStart: '#60a5fa',
+                gradEnd: '#3b82f6',
+                accent: '#2563eb'
+            },
+            blue: {
+                bg: '#9fc6e2',
+                bg2: '#cfe8f8',
+                navy: '#1e3a8a',
+                gradStart: '#3b5998',
+                gradEnd: '#5a8dee',
+                accent: '#2b7bd6'
+            },
+            navy: {
+                bg: '#93c5fd',
+                bg2: '#bfdbfe',
+                navy: '#1e3a8a',
+                gradStart: '#1e40af',
+                gradEnd: '#1e3a8a',
+                accent: '#1d4ed8'
             },
             purple: {
                 bg: '#e9d5ff',
@@ -1369,6 +1680,22 @@
                 gradStart: '#8d6e63',
                 gradEnd: '#6d4c41',
                 accent: '#795548'
+            },
+            gray: {
+                bg: '#e5e7eb',
+                bg2: '#f3f4f6',
+                navy: '#111827',
+                gradStart: '#4b5563',
+                gradEnd: '#6b7280',
+                accent: '#374151'
+            },
+            blackWhite: {
+                bg: '#ffffff',
+                bg2: '#f8f9fa',
+                navy: '#000000',
+                gradStart: '#000000',
+                gradEnd: '#333333',
+                accent: '#666666'
             }
         };
 
@@ -1439,5 +1766,5 @@
         loadSavedTheme();
         renderNotes();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9985035455afd282',t:'MTc2MjEwMDk5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a7321c5b67e441d',t:'MTc2NDU5Nzg0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
