@@ -2,6 +2,7 @@
 <html lang="pl">
  <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Twoje Notatki</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -569,30 +570,35 @@
             animation: fadeInUp 0.6s ease-out 0.4s both;
         }
 
-        .settings-panel .theme-option {
+        #classicTab .theme-option {
             animation: slideInFromRight 0.4s ease-out both;
         }
 
-        .settings-panel .theme-option:nth-child(1) { animation-delay: 0.5s; }
-        .settings-panel .theme-option:nth-child(2) { animation-delay: 0.55s; }
-        .settings-panel .theme-option:nth-child(3) { animation-delay: 0.6s; }
-        .settings-panel .theme-option:nth-child(4) { animation-delay: 0.65s; }
-        .settings-panel .theme-option:nth-child(5) { animation-delay: 0.7s; }
-        .settings-panel .theme-option:nth-child(6) { animation-delay: 0.75s; }
-        .settings-panel .theme-option:nth-child(7) { animation-delay: 0.8s; }
-        .settings-panel .theme-option:nth-child(8) { animation-delay: 0.85s; }
-        .settings-panel .theme-option:nth-child(9) { animation-delay: 0.9s; }
-        .settings-panel .theme-option:nth-child(10) { animation-delay: 0.95s; }
-        .settings-panel .theme-option:nth-child(11) { animation-delay: 1s; }
-        .settings-panel .theme-option:nth-child(12) { animation-delay: 1.05s; }
-        .settings-panel .theme-option:nth-child(13) { animation-delay: 1.1s; }
-        .settings-panel .theme-option:nth-child(14) { animation-delay: 1.15s; }
-        .settings-panel .theme-option:nth-child(15) { animation-delay: 1.2s; }
-        .settings-panel .theme-option:nth-child(16) { animation-delay: 1.25s; }
-        .settings-panel .theme-option:nth-child(17) { animation-delay: 1.3s; }
-        .settings-panel .theme-option:nth-child(18) { animation-delay: 1.35s; }
-        .settings-panel .theme-option:nth-child(19) { animation-delay: 1.4s; }
-        .settings-panel .theme-option:nth-child(20) { animation-delay: 1.45s; }
+        #classicTab .theme-option:nth-child(1) { animation-delay: 0.5s; }
+        #classicTab .theme-option:nth-child(2) { animation-delay: 0.55s; }
+        #classicTab .theme-option:nth-child(3) { animation-delay: 0.6s; }
+        #classicTab .theme-option:nth-child(4) { animation-delay: 0.65s; }
+        #classicTab .theme-option:nth-child(5) { animation-delay: 0.7s; }
+        #classicTab .theme-option:nth-child(6) { animation-delay: 0.75s; }
+        #classicTab .theme-option:nth-child(7) { animation-delay: 0.8s; }
+        #classicTab .theme-option:nth-child(8) { animation-delay: 0.85s; }
+        #classicTab .theme-option:nth-child(9) { animation-delay: 0.9s; }
+        #classicTab .theme-option:nth-child(10) { animation-delay: 0.95s; }
+        #classicTab .theme-option:nth-child(11) { animation-delay: 1s; }
+        #classicTab .theme-option:nth-child(12) { animation-delay: 1.05s; }
+        #classicTab .theme-option:nth-child(13) { animation-delay: 1.1s; }
+        #classicTab .theme-option:nth-child(14) { animation-delay: 1.15s; }
+        #classicTab .theme-option:nth-child(15) { animation-delay: 1.2s; }
+        #classicTab .theme-option:nth-child(16) { animation-delay: 1.25s; }
+        #classicTab .theme-option:nth-child(17) { animation-delay: 1.3s; }
+        #classicTab .theme-option:nth-child(18) { animation-delay: 1.35s; }
+
+        #seasonalTab .theme-option {
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        #seasonalTab .theme-option:nth-child(1) { animation-delay: 0.5s; }
+        #seasonalTab .theme-option:nth-child(2) { animation-delay: 0.6s; }
 
         @keyframes fadeInUp {
             from {
@@ -663,6 +669,14 @@
             font-size: 14px;
             font-weight: 500;
             color: var(--navy);
+        }
+
+        .theme-date {
+            font-size: 11px;
+            color: var(--navy);
+            opacity: 0.7;
+            margin-top: 2px;
+            font-style: italic;
         }
 
         .settings-section {
@@ -896,25 +910,10 @@
    <svg viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px;"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" /> <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m15.5-3.5L19 4.5M5 19.5L7.5 17M19 19.5L16.5 17M5 4.5L7.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
    </svg></button>
   <div class="settings-panel" id="settingsPanel">
-   <h3 class="settings-title">Dostosuj wygląd strony</h3><!-- Sekcja Kolory Sezonowe -->
-   <div class="settings-section">
-    <div class="section-label">
-     ❄️ Kolory Sezonowe 🎄
-    </div>
-    <div class="color-themes">
-     <div class="theme-option" onclick="changeTheme('christmas')" data-theme="christmas">
-      <div class="theme-preview" style="background: linear-gradient(135deg, #1a472a 0%, #c41e3a 100%);"></div><span class="theme-name">🎄 Świąteczna Harmonia</span>
-     </div>
-     <div class="theme-option" onclick="changeTheme('snow')" data-theme="snow">
-      <div class="theme-preview" style="background: linear-gradient(135deg, #e0f2fe 0%, #0ea5e9 100%);"></div><span class="theme-name">❄️ Śnieżna Zadyma</span>
-     </div>
-    </div>
-   </div>
-   <div class="section-divider"></div><!-- Sekcja Klasyczne Kolory -->
-   <div class="settings-section">
-    <div class="section-label">
-     🌈 Kolory Klasyczne
-    </div>
+   <h3 class="settings-title">Dostosuj wygląd strony</h3><!-- Przełącznik zakładek -->
+   <div class="tabs-container" style="display: flex; gap: 8px; margin-bottom: 20px;"><button class="tab-btn active" onclick="switchTab('classic')" data-tab="classic" style="flex: 1; padding: 12px 8px; background: rgba(255, 255, 255, 0.4); border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 13px; color: var(--navy); transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"> 🌈 Klasyczne </button> <button class="tab-btn" onclick="switchTab('seasonal')" data-tab="seasonal" style="flex: 1; padding: 12px 8px; background: rgba(255, 255, 255, 0.2); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 13px; color: var(--navy); transition: all 0.3s ease;"> ❄️ Sezonowe 🎄 </button>
+   </div><!-- Zakładka Klasyczne Kolory -->
+   <div class="tab-content" id="classicTab">
     <div class="color-themes">
      <div class="theme-option" onclick="changeTheme('pink')" data-theme="pink">
       <div class="theme-preview" style="background: linear-gradient(135deg, #fce7f3 0%, #db2777 100%);"></div><span class="theme-name">Różowy</span>
@@ -969,6 +968,32 @@
      </div>
      <div class="theme-option" onclick="changeTheme('blackWhite')" data-theme="blackWhite">
       <div class="theme-preview" style="background: linear-gradient(135deg, #ffffff 0%, #000000 100%);"></div><span class="theme-name">Czarno-biały</span>
+     </div>
+    </div>
+   </div><!-- Zakładka Kolory Sezonowe -->
+   <div class="tab-content" id="seasonalTab" style="display: none;">
+    <div class="color-themes">
+     <div class="theme-option" onclick="changeTheme('christmas')" data-theme="christmas">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #1a472a 0%, #c41e3a 100%);"></div>
+      <div style="flex: 1;">
+       <div class="theme-name">
+        🎄 Świąteczna Harmonia
+       </div>
+       <div class="theme-date">
+        Do 1 stycznia
+       </div>
+      </div>
+     </div>
+     <div class="theme-option" onclick="changeTheme('snow')" data-theme="snow">
+      <div class="theme-preview" style="background: linear-gradient(135deg, #e0f2fe 0%, #0ea5e9 100%);"></div>
+      <div style="flex: 1;">
+       <div class="theme-name">
+        ❄️ Śnieżna Zadyma
+       </div>
+       <div class="theme-date">
+        Do 2 lutego
+       </div>
+      </div>
      </div>
     </div>
    </div>
@@ -1138,10 +1163,12 @@
             const formContent = document.getElementById('modalFormContent');
             const notesGrid = document.getElementById('notesGrid');
             const searchContainer = document.querySelector('.search-container');
+            const headerTitle = document.querySelector('.header h1');
             
-            // Ukryj siatką notatek i wyszukiwarkę podczas animacji
-            notesGrid.style.opacity = '0';
-            searchContainer.style.opacity = '0';
+            // Ukryj siatkę notatek, wyszukiwarkę i tytuł podczas animacji
+            notesGrid.style.display = 'none';
+            searchContainer.style.display = 'none';
+            headerTitle.style.display = 'none';
             
             // Resetuj formularz
             document.getElementById('noteTitleInBtn').value = '';
@@ -1205,9 +1232,11 @@
                         // Krok 3: Przycisk wraca do normalnego stanu (niebieski)
                         btn.classList.remove('expanding');
                         
-                        // Przywróć widoczność siatki notatek i wyszukiwarki
-                        notesGrid.style.opacity = '1';
-                        searchContainer.style.opacity = '1';
+                        // Przywróć widoczność siatki notatek, wyszukiwarki i tytułu
+                        notesGrid.style.display = 'grid';
+                        searchContainer.style.display = 'block';
+                        const headerTitle = document.querySelector('.header h1');
+                        headerTitle.style.display = 'block';
                         
                         isModalAnimating = false;
                     }, 400);
@@ -1578,6 +1607,37 @@
         // Funkcje ustawień
         let isSettingsOpen = false;
         
+        function switchTab(tabName) {
+            // Ukryj wszystkie zakładki
+            document.getElementById('classicTab').style.display = 'none';
+            document.getElementById('seasonalTab').style.display = 'none';
+            
+            // Usuń aktywną klasę ze wszystkich przycisków
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = 'rgba(255, 255, 255, 0.2)';
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                btn.style.boxShadow = 'none';
+            });
+            
+            // Pokaż wybraną zakładkę i zaznacz przycisk
+            if (tabName === 'classic') {
+                document.getElementById('classicTab').style.display = 'block';
+                const btn = document.querySelector('[data-tab="classic"]');
+                btn.classList.add('active');
+                btn.style.background = 'rgba(255, 255, 255, 0.4)';
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+                btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+            } else if (tabName === 'seasonal') {
+                document.getElementById('seasonalTab').style.display = 'block';
+                const btn = document.querySelector('[data-tab="seasonal"]');
+                btn.classList.add('active');
+                btn.style.background = 'rgba(255, 255, 255, 0.4)';
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+                btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+            }
+        }
+        
         function toggleSettings() {
             const panel = document.getElementById('settingsPanel');
             const btn = document.querySelector('.settings-btn');
@@ -1868,5 +1928,5 @@
         loadSavedTheme();
         renderNotes();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a744b4086b8dbc9',t:'MTc2NDYxMDAzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a843b9060edc017',t:'MTc2NDc3NzE2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
